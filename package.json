@@ -1,0 +1,26 @@
+{
+  "name": "hypercore-playground",
+  "description": "nothing",
+  "author": "YerkoPalma",
+  "version": "0.1.0",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "standard --verbose | snazzy && tape test.js | tap-summary",
+    "start": "node index.js"
+  },
+  "repository": "YerkoPalma/hypercore-playground",
+  "license": "MIT",
+  "keywords": [
+    "hypercore",
+    "playground"
+  ],
+  "devDependencies": {
+    "snazzy": "^8.0.0",
+    "standard": "^14.3.4",
+    "tap-summary": "^4.0.0",
+    "tape": "^5.0.1"
+  }
+}
