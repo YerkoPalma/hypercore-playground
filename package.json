@@ -22,5 +22,9 @@
     "standard": "^14.3.4",
     "tap-summary": "^4.0.0",
     "tape": "^5.0.1"
+  },
+  "dependencies": {
+    "hyperswarm": "^2.14.0",
+    "sodium-universal": "^2.0.0"
   }
 }
