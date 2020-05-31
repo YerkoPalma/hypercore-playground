@@ -9,7 +9,7 @@
 const hyperswarm = require('hyperswarm')
 const sodium = require('sodium-universal')
 
-const { crypto_generichash, crypto_generichash_BYTES } = sodium
+const { crypto_generichash, crypto_generichash_BYTES, randombytes_buf } = sodium
 const swarm = hyperswarm()
 
 const name = process.argv[2]
@@ -24,10 +24,19 @@ swarm.join(key, {
 })
 
 swarm.on('connection', (socket, info) => {
-  socket.pipe(process.stdout)
   process.stdin.pipe(socket)
-  console.log('connection!')
-  console.log(info.peer)
+  const peerId = Buffer.alloc(crypto_generichash_BYTES)
+  randombytes_buf(peerId)
+  // dedup
+  socket.write(peerId.toString('hex'))
+  socket.once('data', (data) => {
+    info.deduplicate(peerId, data)
+  })
+  socket.on('data', (data) => {
+    if (info.client) {
+      console.log(data.toString().slice(0, -1))
+    }
+  })
 })
 
 process.on('exit', () => {
