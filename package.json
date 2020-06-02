@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "hyperswarm": "^2.14.0",
+    "kleur": "^3.0.3",
     "sodium-universal": "^2.0.0"
   }
 }

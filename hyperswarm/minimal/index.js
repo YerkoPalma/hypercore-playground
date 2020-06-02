@@ -38,7 +38,3 @@ swarm.on('connection', (socket, info) => {
     }
   })
 })
-
-process.on('exit', () => {
-  swarm.leave(key)
-})
