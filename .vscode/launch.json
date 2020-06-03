@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\hyperswarm\\fancy\\index.js",
+      "program": "${workspaceFolder}\\hyperswarm\\universal-chat\\cli.js",
       "args": ["test"]
     }
   ]

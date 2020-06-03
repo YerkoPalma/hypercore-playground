@@ -6,7 +6,7 @@
  * and output any message from that channel. Also stdin will go to that channel,
  * so it is basically a chat
  */
-
+const readline = require('readline')
 const hyperswarm = require('hyperswarm')
 const sodium = require('sodium-universal')
 const { grey } = require('kleur')
@@ -26,7 +26,12 @@ swarm.join(key, {
 })
 
 swarm.on('connection', (socket, info) => {
-  process.stdin.pipe(socket)
+  // process.stdin.pipe(socket)
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: socket,
+    prompt: getDate()
+  })
   const peerId = Buffer.alloc(crypto_generichash_BYTES)
   randombytes_buf(peerId)
   // dedup
@@ -36,8 +41,15 @@ swarm.on('connection', (socket, info) => {
 
     socket.on('data', (data) => {
       if (info.client) {
-        console.log(grey().bold(getDate()), data.toString().slice(0, -1))
+        console.log(grey().bold(getDate()), data.toString())
       }
+    })
+
+    rl.on('line', data => {
+      if (!info.client) {
+        socket.write(data)
+      }
+      // console.log(grey().bold(getDate()), data)
     })
   })
 })
