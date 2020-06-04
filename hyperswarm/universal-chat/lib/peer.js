@@ -1,5 +1,8 @@
 const EventEmitter = require('events')
 const ndjson = require('ndjson')
+const sodium = require('sodium-universal')
+
+const { crypto_generichash_BYTES, randombytes_buf } = sodium
 
 module.exports.Peer = class Peer extends EventEmitter {
   constructor (connection, info) {
@@ -8,12 +11,23 @@ module.exports.Peer = class Peer extends EventEmitter {
     const peer = info.peer
     this.info = info
 
+    const peerId = Buffer.alloc(crypto_generichash_BYTES)
+    randombytes_buf(peerId)
+
     this.connection = connection
     this.incoming = ndjson.parse()
     this.outgoing = ndjson.stringify()
 
     connection.pipe(this.incoming)
     this.outgoing.pipe(connection)
+
+    this.send({
+      type: 'peerID',
+      id: peerId
+    })
+    this.incoming.once('peerID', (data) => {
+      info.deduplicate(peerId, data.id)
+    })
 
     this.incoming.on('data', (data) => {
       this.emit('data', data)
