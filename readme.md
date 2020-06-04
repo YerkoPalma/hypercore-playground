@@ -37,7 +37,7 @@ This one was surprisingly easy, but has some drawbacks. When a peer process is k
 it kills all other peers, this seems to be because I'm connecting directly to the process 
 stdio streams.
 - *fancy*: This one was a mess. I just tried to make it look like a chat by changing the log, but it seems to be quite difficult to change `process.stdout` as many sites suggest. So this is broken.
-- *universal-chat*: This is basically [RangerMauve/hyperswarm-universal-chat][hyperswarm-universal-chat]
+- *universal-chat*: This is basically [RangerMauve/hyperswarm-universal-chat][hyperswarm-universal-chat]. I've just added some code for deduplication.
 
 ## License
 [MIT](/license)
