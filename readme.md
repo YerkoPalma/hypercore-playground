@@ -56,7 +56,7 @@ feed.append(data, (err, seq) => {
 })
 ```
 
-that's because **you can´t write data to a feed that you didn't create**, 
+that's because **you can´t write data to a feed that you didn't create**, you can see that from [hypercore tests](https://github.com/hypercore-protocol/hypercore/tree/master/test) (the are very illustrative)
 
 ## License
 [MIT](/license)
