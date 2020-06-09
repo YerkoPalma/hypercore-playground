@@ -39,8 +39,28 @@ stdio streams.
 - *fancy*: This one was a mess. I just tried to make it look like a chat by changing the log, but it seems to be quite difficult to change `process.stdout` as many sites suggest. So this is broken.
 - *universal-chat*: This is basically [RangerMauve/hyperswarm-universal-chat][hyperswarm-universal-chat]. I've just added some code for deduplication.
 
+### [`hypercore`][hypercore]
+
+> Hypercore is a secure, distributed append-only log.
+
+- *minimal*: I actually started trying with the chat folder, but had no result. So tried a bit simpler approach but have issues also. After a lot of old school debuggin (`console.log` every where) I found out that my error was because of this code pattern
+
+```js
+feed = hypercore(ram, argv.key)
+// ...
+feed.append(data, (err, seq) => {
+  if (err) {
+    console.error(err)
+    process.exit(1)
+  }
+})
+```
+
+that's because **you can´t write data to a feed that you didn't create**, 
+
 ## License
 [MIT](/license)
 
 [hyperswarm]: https://github.com/hyperswarm/hyperswarm
+[hypercore]: https://github.com/hypercore-protocol/hypercore
 [hyperswarm-universal-chat]: https://github.com/RangerMauve/hyperswarm-universal-chat
